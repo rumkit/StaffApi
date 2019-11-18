@@ -9,9 +9,9 @@ namespace StaffApi.Models
     {
         Task<IEnumerable<Employee>> GetEmployeesAsync();
         Task<Employee> FindAsync(int id);
-        Task CreateEmployeeAsync(Employee employee);
-        Task RemoveEmployeeAsync(Employee employee);
-        Task UpdateEmployeeAsync(Employee employee);
+        Task CreateAsync(Employee employee);
+        Task RemoveAsync(Employee employee);
+        Task UpdateAsync(Employee employee);
         bool EmployeeExists(int id);
     }
 }

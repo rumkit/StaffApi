@@ -24,7 +24,10 @@ namespace StaffApi.Controllers
 
         }
 
-        // GET: api/Employees
+        /// <summary>
+        /// Get list of all employees with their positions
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> GetEmployee()
         {
@@ -32,7 +35,11 @@ namespace StaffApi.Controllers
             return employees.Select(e => new EmployeeViewModel(e)).ToList();
         }
 
-        // GET: api/Employees/5
+        /// <summary>
+        /// Get employee with specified id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeViewModel>> GetEmployee(int id)
         {
@@ -55,11 +62,11 @@ namespace StaffApi.Controllers
             if (id != employee.Id)
             {
                 return BadRequest();
-            }            
+            }
 
             try
             {
-                await _employeeRepository.UpdateEmployeeAsync(employee);
+                await _employeeRepository.UpdateAsync(employee);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -82,7 +89,7 @@ namespace StaffApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
-            await _employeeRepository.CreateEmployeeAsync(employee);
+            await _employeeRepository.CreateAsync(employee);
 
             return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
         }
@@ -97,7 +104,7 @@ namespace StaffApi.Controllers
                 return NotFound();
             }
 
-            await _employeeRepository.RemoveEmployeeAsync(employee);
+            await _employeeRepository.RemoveAsync(employee);
             return employee;
         }
 

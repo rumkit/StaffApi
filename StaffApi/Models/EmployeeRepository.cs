@@ -20,19 +20,19 @@ namespace StaffApi.Models
             return await _context.Employees.ToListAsync();
         }
 
-        public async Task CreateEmployeeAsync(Employee employee)
+        public async Task CreateAsync(Employee employee)
         {
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveEmployeeAsync(Employee employee)
+        public async Task RemoveAsync(Employee employee)
         {
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateEmployeeAsync(Employee employee)
+        public async Task UpdateAsync(Employee employee)
         {
             _context.Entry(employee).State = EntityState.Modified;
             await _context.SaveChangesAsync();

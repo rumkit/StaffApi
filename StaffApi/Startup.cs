@@ -41,6 +41,7 @@ namespace StaffApi
                 options.AssumeDefaultVersionWhenUnspecified = true);
 
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IPositionRepository, PositionRepository>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

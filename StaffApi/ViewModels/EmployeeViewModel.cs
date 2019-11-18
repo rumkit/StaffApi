@@ -11,7 +11,7 @@ namespace StaffApi.ViewModels
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public ICollection<Position> Positions { get; set; }
+        public ICollection<PositionViewModel> Positions { get; set; }
 
         public EmployeeViewModel()
         {
@@ -25,7 +25,7 @@ namespace StaffApi.ViewModels
             DateOfBirth = employee.DateOfBirth;
             if (employee.EmployeePositions?.Count > 0)
             {
-                Positions = employee.EmployeePositions.Select(ep => ep.Position).ToList();
+                Positions = employee.EmployeePositions.Select(ep => new PositionViewModel(ep.Position)).ToList();
             }
         }
     }

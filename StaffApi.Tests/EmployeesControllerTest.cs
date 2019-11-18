@@ -5,6 +5,7 @@ using StaffApi.Models;
 using StaffApi.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -58,19 +59,19 @@ namespace StaffApi.Tests
                 {
                     Id = 1,
                     Name = "Test1",
-                    DateOfBirth = DateTime.Parse("1.01.1989")
+                    DateOfBirth = DateTime.Parse("01/01/1989", CultureInfo.InvariantCulture)
                 },
                 new Employee()
                 {
                     Id = 3,
                     Name = "Test2",
-                    DateOfBirth = DateTime.Parse("8.10.1995")
+                    DateOfBirth = DateTime.Parse("10/08/1995", CultureInfo.InvariantCulture)
                 },
                 new Employee()
                 {
                     Id = 7,
                     Name = "Test3",
-                    DateOfBirth = DateTime.Parse("16.03.1975")
+                    DateOfBirth = DateTime.Parse("03/16/1975", CultureInfo.InvariantCulture)
                 }
             };
         }

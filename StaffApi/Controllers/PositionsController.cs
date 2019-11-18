@@ -48,7 +48,7 @@ namespace StaffApi.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPosition(int id, Position position)
+        public async Task<IActionResult> Update(int id, Position position)
         {
             if (id != position.Id)
             {
@@ -78,7 +78,7 @@ namespace StaffApi.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
-        public async Task<ActionResult<Position>> PostPosition(Position position)
+        public async Task<ActionResult<Position>> Create(Position position)
         {
             await _positionRepository.CreateAsync(position);
 

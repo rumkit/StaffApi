@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace StaffApi.Models
 {
-    public class Employee
+    public class Position
     {
         [Key]
         public uint Id { get; set; }
         public string Name { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public ICollection<EmployeePosition> EmployeePositions {get;set;}
+        [Range(1,15)]
+        public int Grade { get; set; }
+        public ICollection<EmployeePosition> EmployeePositions { get; set; }        
     }
 }

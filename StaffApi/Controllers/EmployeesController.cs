@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StaffApi.Data;
 using StaffApi.Models;
+using StaffApi.ViewModels;
 
 namespace StaffApi.Controllers
 {
@@ -15,32 +16,34 @@ namespace StaffApi.Controllers
     [Route("api/[controller]")]
     public class EmployeesController : ControllerBase
     {
-        private readonly StaffApiContext _context;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public EmployeesController(StaffApiContext context)
+        public EmployeesController(IEmployeeRepository employeeRepository)
         {
-            _context = context;
+            _employeeRepository = employeeRepository;
+
         }
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployee()
+        public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> GetEmployee()
         {
-            return await _context.Employees.ToListAsync();
+            var employees = await _employeeRepository.GetEmployeesAsync();
+            return employees.Select(e => new EmployeeViewModel(e)).ToList();
         }
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public async Task<ActionResult<EmployeeViewModel>> GetEmployee(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = await _employeeRepository.FindAsync(id);
 
             if (employee == null)
             {
                 return NotFound();
             }
 
-            return employee;
+            return new EmployeeViewModel(employee);
         }
 
         // PUT: api/Employees/5
@@ -52,13 +55,11 @@ namespace StaffApi.Controllers
             if (id != employee.Id)
             {
                 return BadRequest();
-            }
-
-            _context.Entry(employee).State = EntityState.Modified;
+            }            
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _employeeRepository.UpdateEmployeeAsync(employee);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,8 +82,7 @@ namespace StaffApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
+            await _employeeRepository.CreateEmployeeAsync(employee);
 
             return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
         }
@@ -91,21 +91,19 @@ namespace StaffApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Employee>> DeleteEmployee(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = await _employeeRepository.FindAsync(id);
             if (employee == null)
             {
                 return NotFound();
             }
 
-            _context.Employees.Remove(employee);
-            await _context.SaveChangesAsync();
-
+            await _employeeRepository.RemoveEmployeeAsync(employee);
             return employee;
         }
 
         private bool EmployeeExists(int id)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return _employeeRepository.EmployeeExists(id);
         }
     }
 }

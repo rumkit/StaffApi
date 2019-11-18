@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using StaffApi.Data;
 using Microsoft.OpenApi.Models;
+using StaffApi.Models;
 
 namespace StaffApi
 {
@@ -31,10 +32,15 @@ namespace StaffApi
             services.AddControllers();
 
             services.AddDbContext<StaffApiContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("StaffApiContext")));
+                    options
+                    .UseSqlServer(Configuration.GetConnectionString("StaffApiContext"))
+                    .UseLazyLoadingProxies()
+                    );
 
             services.AddApiVersioning(options =>            
                 options.AssumeDefaultVersionWhenUnspecified = true);
+
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

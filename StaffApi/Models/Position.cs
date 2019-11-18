@@ -13,6 +13,6 @@ namespace StaffApi.Models
         public string Name { get; set; }
         [Range(1,15)]
         public int Grade { get; set; }
-        public ICollection<EmployeePosition> EmployeePositions { get; set; }        
+        public virtual ICollection<EmployeePosition> EmployeePositions { get; set; }        
     }
 }

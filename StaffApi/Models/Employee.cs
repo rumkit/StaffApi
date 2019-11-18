@@ -12,7 +12,6 @@ namespace StaffApi.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public ICollection<EmployeePosition> EmployeePositions {get;set;}
-        public IEnumerable<Position> Positions => EmployeePositions.Select(ep => ep.Position);
+        public virtual ICollection<EmployeePosition> EmployeePositions {get;set;}        
     }
 }

@@ -43,6 +43,25 @@ namespace StaffApi.Models
             return _context.Employees.Any(e => e.Id == id);
         }
 
+        public async Task AddPositionAsync(Employee employee, Position position)
+        {
+            employee.EmployeePositions.Add(new EmployeePosition()
+            {
+                EmployeeId = employee.Id,
+                PositionId = position.Id
+            });
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemovePositionAsync(Employee employee, Position position)
+        {
+            var ep = employee.EmployeePositions.FirstOrDefault(ep => ep.PositionId == position.Id);
+            if(ep == null)
+                throw new DbUpdateConcurrencyException();
+            employee.EmployeePositions.Remove(ep);
+            await _context.SaveChangesAsync();
+        }
+
         public EmployeeRepository(StaffApiContext context)
         {
             _context = context;

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaffApi", "StaffApi\StaffA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffApi.DAL", "StaffApi.DAL\StaffApi.DAL.csproj", "{D3795E83-F9A8-4D5B-8041-14B11F56D2CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffApi.Tests", "StaffApi.Tests\StaffApi.Tests.csproj", "{EAC4986F-7928-4A15-8291-981F0FABC16D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D3795E83-F9A8-4D5B-8041-14B11F56D2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3795E83-F9A8-4D5B-8041-14B11F56D2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3795E83-F9A8-4D5B-8041-14B11F56D2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC4986F-7928-4A15-8291-981F0FABC16D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC4986F-7928-4A15-8291-981F0FABC16D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC4986F-7928-4A15-8291-981F0FABC16D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC4986F-7928-4A15-8291-981F0FABC16D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

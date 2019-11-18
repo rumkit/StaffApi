@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using StaffApi.Data;
 using Microsoft.OpenApi.Models;
 using StaffApi.Models;
+using System.IO;
 
 namespace StaffApi
 {
@@ -47,6 +48,7 @@ namespace StaffApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Staff API", Version = "v1" });
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "StaffApi.xml"));
             });
         }
 

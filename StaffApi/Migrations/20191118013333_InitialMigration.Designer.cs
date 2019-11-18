@@ -10,8 +10,8 @@ using StaffApi.Data;
 namespace StaffApi.Migrations
 {
     [DbContext(typeof(StaffApiContext))]
-    [Migration("20191118005937_PositionsAdded")]
-    partial class PositionsAdded
+    [Migration("20191118013333_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,9 +23,10 @@ namespace StaffApi.Migrations
 
             modelBuilder.Entity("StaffApi.Models.Employee", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -40,11 +41,11 @@ namespace StaffApi.Migrations
 
             modelBuilder.Entity("StaffApi.Models.EmployeePosition", b =>
                 {
-                    b.Property<long>("EmployeeId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
 
-                    b.Property<long>("PositionId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("PositionId")
+                        .HasColumnType("int");
 
                     b.HasKey("EmployeeId", "PositionId");
 
@@ -55,9 +56,13 @@ namespace StaffApi.Migrations
 
             modelBuilder.Entity("StaffApi.Models.Position", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Grade")
                         .HasColumnType("int");
@@ -66,6 +71,8 @@ namespace StaffApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Positions");
                 });
@@ -83,6 +90,13 @@ namespace StaffApi.Migrations
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("StaffApi.Models.Position", b =>
+                {
+                    b.HasOne("StaffApi.Models.Employee", null)
+                        .WithMany("Positions")
+                        .HasForeignKey("EmployeeId");
                 });
 #pragma warning restore 612, 618
         }

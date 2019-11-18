@@ -9,7 +9,7 @@ namespace StaffApi.Models
     public class Position
     {
         [Key]
-        public uint Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         [Range(1,15)]
         public int Grade { get; set; }

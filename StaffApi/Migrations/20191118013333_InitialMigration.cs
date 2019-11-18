@@ -1,38 +1,53 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StaffApi.Migrations
 {
-    public partial class PositionsAdded : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<long>(
-                name: "Id",
-                table: "Employees",
-                nullable: false,
-                oldClrType: typeof(long),
-                oldType: "bigint")
-                .OldAnnotation("SqlServer:Identity", "1, 1");
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    DateOfBirth = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Positions",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    Grade = table.Column<int>(nullable: false)
+                    Grade = table.Column<int>(nullable: false),
+                    EmployeeId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Positions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Positions_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "EmployeePosition",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<long>(nullable: false),
-                    PositionId = table.Column<long>(nullable: false)
+                    EmployeeId = table.Column<int>(nullable: false),
+                    PositionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,6 +70,11 @@ namespace StaffApi.Migrations
                 name: "IX_EmployeePosition_PositionId",
                 table: "EmployeePosition",
                 column: "PositionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Positions_EmployeeId",
+                table: "Positions",
+                column: "EmployeeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -65,13 +85,8 @@ namespace StaffApi.Migrations
             migrationBuilder.DropTable(
                 name: "Positions");
 
-            migrationBuilder.AlterColumn<long>(
-                name: "Id",
-                table: "Employees",
-                type: "bigint",
-                nullable: false,
-                oldClrType: typeof(long))
-                .Annotation("SqlServer:Identity", "1, 1");
+            migrationBuilder.DropTable(
+                name: "Employees");
         }
     }
 }

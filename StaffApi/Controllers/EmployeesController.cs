@@ -10,9 +10,9 @@ using StaffApi.Models;
 
 namespace StaffApi.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Route("api/[controller]")]
     public class EmployeesController : ControllerBase
     {
         private readonly StaffApiContext _context;
@@ -31,7 +31,7 @@ namespace StaffApi.Controllers
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(uint id)
+        public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
 
@@ -47,7 +47,7 @@ namespace StaffApi.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(uint id, Employee employee)
+        public async Task<IActionResult> PutEmployee(int id, Employee employee)
         {
             if (id != employee.Id)
             {
@@ -89,7 +89,7 @@ namespace StaffApi.Controllers
 
         // DELETE: api/Employees/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Employee>> DeleteEmployee(uint id)
+        public async Task<ActionResult<Employee>> DeleteEmployee(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
             if (employee == null)
@@ -103,7 +103,7 @@ namespace StaffApi.Controllers
             return employee;
         }
 
-        private bool EmployeeExists(uint id)
+        private bool EmployeeExists(int id)
         {
             return _context.Employees.Any(e => e.Id == id);
         }

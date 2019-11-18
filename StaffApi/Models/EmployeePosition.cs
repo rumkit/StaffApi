@@ -7,9 +7,9 @@ namespace StaffApi.Models
 {
     public class EmployeePosition
     {
-        public uint EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
-        public uint PositionId { get; set; }
+        public int PositionId { get; set; }
         public Position Position { get; set; }
     }
 }

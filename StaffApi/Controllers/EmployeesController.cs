@@ -27,7 +27,7 @@ namespace StaffApi.Controllers
         }
 
         /// <summary>
-        /// Get list of all employees with their positions
+        /// Gets list of all employees with their positions
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -38,7 +38,7 @@ namespace StaffApi.Controllers
         }
 
         /// <summary>
-        /// Get employee with specified id
+        /// Gets specific employee
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -55,9 +55,23 @@ namespace StaffApi.Controllers
             return new EmployeeViewModel(employee);
         }
 
-        // PUT: api/Employees/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Updates specified employee info
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /Employee
+        ///     {
+        ///        "id": "0",
+        ///        "name": "Another Employee Name",
+        ///        "dateOfBirth": "1995-10-15"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <param name="employee"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Employee employee)
         {
@@ -85,9 +99,21 @@ namespace StaffApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Employees
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Creates new employee
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Employee
+        ///     {        
+        ///        "name": "New Employee Name",
+        ///        "dateOfBirth": "1995-10-20"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="employee"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<EmployeeViewModel>> Create(Employee employee)
         {
@@ -96,7 +122,11 @@ namespace StaffApi.Controllers
             return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeViewModel(employee));
         }
 
-        // DELETE: api/Employees/5
+        /// <summary>
+        /// Deletes specified employee
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Employee>> Delete(int id)
         {
@@ -110,28 +140,39 @@ namespace StaffApi.Controllers
             return employee;
         }
 
+        /// <summary>
+        /// Adds position to specified employee
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="positionId"></param>
+        /// <returns></returns>
         [HttpPost("{employeeId}/Position/{positionId}")]
         public async Task<ActionResult<EmployeeViewModel>> AddPosition(int employeeId, int positionId)
         {
             var employee = await _employeeRepository.FindAsync(employeeId);
-            if(employee == null)
+            if (employee == null)
                 return NotFound();
             var position = await _positionRepository.FindAsync(positionId);
-            if(position == null)
+            if (position == null)
                 return NotFound();
             try
             {
                 await _employeeRepository.AddPositionAsync(employee, position);
             }
-            catch(InvalidOperationException)
-            {                
+            catch (InvalidOperationException)
+            {
                 return BadRequest("Specified employee does not have such position");
             }
-            
+
             return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeViewModel(employee));
         }
 
-
+        /// <summary>
+        /// Removes position from specified employee
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="positionId"></param>
+        /// <returns></returns>
         [HttpDelete("{employeeId}/Position/{positionId}")]
         public async Task<ActionResult<EmployeeViewModel>> RemovePosition(int employeeId, int positionId)
         {
@@ -145,11 +186,11 @@ namespace StaffApi.Controllers
             {
                 await _employeeRepository.RemovePositionAsync(employee, position);
             }
-            catch(DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException)
             {
                 return BadRequest();
             }
-            
+
             return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeViewModel(employee));
         }
 

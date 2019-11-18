@@ -17,4 +17,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StaffApi.DAL\StaffApi.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

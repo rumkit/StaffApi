@@ -54,7 +54,8 @@ namespace StaffApi.Controllers
 
         /// <summary>
         /// Updates positions details
-        /// </summary>       
+        /// </summary>    
+        /// <remarks>
         /// Sample request:
         ///
         ///     PUT /Positions
@@ -65,6 +66,7 @@ namespace StaffApi.Controllers
         ///     }
         ///
         /// NOTE: grade must be between 1 and 15
+        /// </remarks>
         /// <param name="id"></param>
         /// <param name="position"></param>
         /// <returns></returns>
@@ -97,6 +99,8 @@ namespace StaffApi.Controllers
 
         /// <summary>
         /// Creates new position
+        /// </summary>
+        /// <remarks>
         /// Sample request:
         ///
         ///     POST /Positions
@@ -107,7 +111,7 @@ namespace StaffApi.Controllers
         ///     }
         ///
         /// NOTE: grade must be between 1 and 15
-        /// </summary>
+        /// </remarks>
         /// <param name="position"></param>
         /// <returns></returns>
         [HttpPost]

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StaffApi.Data;
 using StaffApi.Models;
-using StaffApi.ViewModels;
+using StaffApi.DTO;
 
 namespace StaffApi.Controllers
 {
@@ -31,10 +31,10 @@ namespace StaffApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeeViewModel>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetEmployees()
         {
             var employees = await _employeeRepository.GetEmployeesAsync();
-            return employees.Select(e => new EmployeeViewModel(e)).ToList();
+            return employees.Select(e => new EmployeeDTO(e)).ToList();
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace StaffApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<EmployeeViewModel>> GetEmployee(int id)
+        public async Task<ActionResult<EmployeeDTO>> GetEmployee(int id)
         {
             var employee = await _employeeRepository.FindAsync(id);
 
@@ -52,7 +52,7 @@ namespace StaffApi.Controllers
                 return NotFound();
             }
 
-            return new EmployeeViewModel(employee);
+            return new EmployeeDTO(employee);
         }
 
         /// <summary>
@@ -115,11 +115,11 @@ namespace StaffApi.Controllers
         /// <param name="employee"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<EmployeeViewModel>> Create(Employee employee)
+        public async Task<ActionResult<EmployeeDTO>> Create(Employee employee)
         {
             await _employeeRepository.CreateAsync(employee);
 
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeViewModel(employee));
+            return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeDTO(employee));
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace StaffApi.Controllers
         /// <param name="positionId"></param>
         /// <returns></returns>
         [HttpPost("{employeeId}/Position/{positionId}")]
-        public async Task<ActionResult<EmployeeViewModel>> AddPosition(int employeeId, int positionId)
+        public async Task<ActionResult<EmployeeDTO>> AddPosition(int employeeId, int positionId)
         {
             var employee = await _employeeRepository.FindAsync(employeeId);
             if (employee == null)
@@ -164,7 +164,7 @@ namespace StaffApi.Controllers
                 return BadRequest("Specified employee does not have such position");
             }
 
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeViewModel(employee));
+            return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeDTO(employee));
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace StaffApi.Controllers
         /// <param name="positionId"></param>
         /// <returns></returns>
         [HttpDelete("{employeeId}/Position/{positionId}")]
-        public async Task<ActionResult<EmployeeViewModel>> RemovePosition(int employeeId, int positionId)
+        public async Task<ActionResult<EmployeeDTO>> RemovePosition(int employeeId, int positionId)
         {
             var employee = await _employeeRepository.FindAsync(employeeId);
             if (employee == null)
@@ -191,7 +191,7 @@ namespace StaffApi.Controllers
                 return BadRequest();
             }
 
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeViewModel(employee));
+            return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeDTO(employee));
         }
 
         private bool EmployeeExists(int id)

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StaffApi.Data;
 using StaffApi.Models;
-using StaffApi.ViewModels;
+using StaffApi.DTO;
 
 namespace StaffApi.Controllers
 {
@@ -22,17 +22,24 @@ namespace StaffApi.Controllers
             _positionRepository = positionRepository;
         }
 
-        // GET: api/Positions
+        /// <summary>
+        /// Gets list of all available positions
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PositionViewModel>>> GetPositions()
+        public async Task<ActionResult<IEnumerable<PositionDTO>>> GetPositions()
         {
             var positions = await _positionRepository.GetPositionsAsync();
-            return positions.Select(p => new PositionViewModel(p)).ToList();
+            return positions.Select(p => new PositionDTO(p)).ToList();
         }
 
-        // GET: api/Positions/5
+        /// <summary>
+        /// Gets specific position
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<PositionViewModel>> GetPosition(int id)
+        public async Task<ActionResult<PositionDTO>> GetPosition(int id)
         {
             var position = await _positionRepository.FindAsync(id);
 
@@ -41,12 +48,15 @@ namespace StaffApi.Controllers
                 return NotFound();
             }
 
-            return new PositionViewModel(position);
+            return new PositionDTO(position);
         }
 
-        // PUT: api/Positions/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Updates positions details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Position position)
         {
@@ -74,9 +84,21 @@ namespace StaffApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Positions
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Creates new position
+        /// Sample request:
+        ///
+        ///     PUT /Employee
+        ///     {
+        ///        "id": 0,
+        ///        "name": "Position name",
+        ///        "grade": 9
+        ///     }
+        ///
+        /// NOTE: grade must be between 1 and 15
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Position>> Create(Position position)
         {
@@ -85,7 +107,11 @@ namespace StaffApi.Controllers
             return CreatedAtAction("GetPosition", new { id = position.Id }, position);
         }
 
-        // DELETE: api/Positions/5
+        /// <summary>
+        /// Deletes specified position
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Position>> DeletePosition(int id)
         {

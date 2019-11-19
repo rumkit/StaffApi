@@ -2,7 +2,7 @@
 using Moq;
 using StaffApi.Controllers;
 using StaffApi.Models;
-using StaffApi.ViewModels;
+using StaffApi.DTO;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -30,7 +30,7 @@ namespace StaffApi.Tests
         public async void GetEmployee()
         {
             var response = await _controller.GetEmployees();
-            var responseValue = Assert.IsAssignableFrom<IEnumerable<EmployeeViewModel>>(response.Value);
+            var responseValue = Assert.IsAssignableFrom<IEnumerable<EmployeeDTO>>(response.Value);
             Assert.Equal(3, responseValue.Count());
         }
 
@@ -38,7 +38,7 @@ namespace StaffApi.Tests
         public async void GetEmployeeId()
         {
             var response = await _controller.GetEmployee(3);
-            var responseValue = Assert.IsAssignableFrom<EmployeeViewModel>(response.Value);
+            var responseValue = Assert.IsAssignableFrom<EmployeeDTO>(response.Value);
             Assert.Equal("Test2", responseValue.Name);
         }
 

@@ -4,28 +4,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StaffApi.ViewModels
+namespace StaffApi.DTO
 {
-    public class EmployeeViewModel
+    public class EmployeeDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public ICollection<PositionViewModel> Positions { get; set; }
+        public ICollection<PositionDTO> Positions { get; set; }
 
-        public EmployeeViewModel()
+        public EmployeeDTO()
         {
 
         }
 
-        public EmployeeViewModel(Employee employee)
+        public EmployeeDTO(Employee employee)
         {
             Id = employee.Id;
             Name = employee.Name;
             DateOfBirth = employee.DateOfBirth;
             if (employee.EmployeePositions?.Count > 0)
             {
-                Positions = employee.EmployeePositions.Select(ep => new PositionViewModel(ep.Position)).ToList();
+                Positions = employee.EmployeePositions.Select(ep => new PositionDTO(ep.Position)).ToList();
             }
         }
     }

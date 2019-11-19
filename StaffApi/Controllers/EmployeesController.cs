@@ -61,7 +61,7 @@ namespace StaffApi.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     PUT /Employee
+        ///     PUT /Employees
         ///     {
         ///        "id": "0",
         ///        "name": "Another Employee Name",
@@ -105,7 +105,7 @@ namespace StaffApi.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /Employee
+        ///     POST /Employees
         ///     {        
         ///        "name": "New Employee Name",
         ///        "dateOfBirth": "1995-10-20"

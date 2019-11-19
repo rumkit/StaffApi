@@ -11,8 +11,9 @@ using StaffApi.DTO;
 
 namespace StaffApi.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/[controller]")]        
     public class PositionsController : ControllerBase
     {
         private readonly IPositionRepository _positionRepository;
@@ -53,7 +54,17 @@ namespace StaffApi.Controllers
 
         /// <summary>
         /// Updates positions details
-        /// </summary>
+        /// </summary>       
+        /// Sample request:
+        ///
+        ///     PUT /Positions
+        ///     {
+        ///        "id": 0,
+        ///        "name": "Position name",
+        ///        "grade": 9
+        ///     }
+        ///
+        /// NOTE: grade must be between 1 and 15
         /// <param name="id"></param>
         /// <param name="position"></param>
         /// <returns></returns>
@@ -88,7 +99,7 @@ namespace StaffApi.Controllers
         /// Creates new position
         /// Sample request:
         ///
-        ///     PUT /Employee
+        ///     POST /Positions
         ///     {
         ///        "id": 0,
         ///        "name": "Position name",

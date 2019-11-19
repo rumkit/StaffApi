@@ -6,10 +6,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\StaffApi.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\StaffApi.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StaffApi.DAL\StaffApi.DAL.csproj" />
-  </ItemGroup>
+  </ItemGroup>  
 
 </Project>

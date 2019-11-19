@@ -20,14 +20,15 @@ namespace StaffApi.Tests
         public EmployeesControllerTest()
         {
             var employeeRepository = new Mock<IEmployeeRepository>();
-            employeeRepository.Setup(x => x.GetEmployeesAsync()).ReturnsAsync(GetEmployees);
-            employeeRepository.Setup(x => x.FindAsync(It.IsAny<int>())).Returns<int>((id) => Task.FromResult(GetEmployees().FirstOrDefault(e => e.Id == id)));
+            employeeRepository.Setup(x => x.GetEmployeesAsync()).ReturnsAsync(GetEmployeeCollection);
+            employeeRepository.Setup(x => x.FindAsync(It.IsAny<int>()))
+                .Returns<int>((id) => Task.FromResult(GetEmployeeCollection().FirstOrDefault(e => e.Id == id)));
             var positionRepository = new Mock<IPositionRepository>();
             _controller = new EmployeesController(employeeRepository.Object, positionRepository.Object);
         }
 
         [Fact]
-        public async void GetEmployee()
+        public async void GetEmployees()
         {
             var response = await _controller.GetEmployees();
             var responseValue = Assert.IsAssignableFrom<IEnumerable<EmployeeDTO>>(response.Value);
@@ -35,7 +36,7 @@ namespace StaffApi.Tests
         }
 
         [Fact]
-        public async void GetEmployeeId()
+        public async void GetEmployee()
         {
             var response = await _controller.GetEmployee(3);
             var responseValue = Assert.IsAssignableFrom<EmployeeDTO>(response.Value);
@@ -43,15 +44,31 @@ namespace StaffApi.Tests
         }
 
         [Fact]
-        public async void GetNonExistingEmployee()
+        public async void GetNonExisting()
         {
             var response = await _controller.GetEmployee(4);
             var responseResult = Assert.IsAssignableFrom<StatusCodeResult>(response.Result);
             Assert.Equal(responseResult.StatusCode, (int)HttpStatusCode.NotFound);
         }
 
+        [Fact]
+        public async void PutWrongId()
+        {
+            var response = await _controller.Update(99, new Employee() { Id = 2 });
+            var responseResult = Assert.IsAssignableFrom<StatusCodeResult>(response);
+            Assert.Equal(responseResult.StatusCode, (int)HttpStatusCode.BadRequest);
+        }
 
-        private IEnumerable<Employee> GetEmployees()
+        [Fact]
+        public async void DeleteNonExisting()
+        {
+            var response = await _controller.Delete(99);
+            var responseResult = Assert.IsAssignableFrom<StatusCodeResult>(response.Result);
+            Assert.Equal(responseResult.StatusCode, (int)HttpStatusCode.NotFound);
+        }
+
+
+        private IEnumerable<Employee> GetEmployeeCollection()
         {
             return new List<Employee>()
             {

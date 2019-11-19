@@ -113,7 +113,7 @@ namespace StaffApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Position>> DeletePosition(int id)
+        public async Task<ActionResult<Position>> Delete(int id)
         {
             var position = await _positionRepository.FindAsync(id);
             if (position == null)

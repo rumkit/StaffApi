@@ -1,20 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using StaffApi.Data;
 using Microsoft.OpenApi.Models;
+using StaffApi.Data;
 using StaffApi.Models;
-using System.IO;
 
 namespace StaffApi
 {
@@ -33,12 +27,12 @@ namespace StaffApi
             services.AddControllers();
 
             services.AddDbContext<StaffApiContext>(options =>
-                    options
+                options
                     .UseSqlServer(Configuration.GetConnectionString("StaffApiContext"))
                     .UseLazyLoadingProxies()
-                    );
+            );
 
-            services.AddApiVersioning(options =>            
+            services.AddApiVersioning(options =>
                 options.AssumeDefaultVersionWhenUnspecified = true);
 
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
@@ -47,7 +41,7 @@ namespace StaffApi
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Staff API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Staff API", Version = "v1"});
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "StaffApi.xml"));
             });
         }
@@ -77,10 +71,7 @@ namespace StaffApi
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });            
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

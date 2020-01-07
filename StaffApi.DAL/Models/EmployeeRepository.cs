@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using StaffApi.Data;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using StaffApi.Data;
 
 namespace StaffApi.Models
 {
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly StaffApiContext _context;
+
         public async Task<Employee> FindAsync(int id)
         {
             return await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
@@ -45,7 +45,7 @@ namespace StaffApi.Models
 
         public async Task AddPositionAsync(Employee employee, Position position)
         {
-            employee.EmployeePositions.Add(new EmployeePosition()
+            employee.EmployeePositions.Add(new EmployeePosition
             {
                 EmployeeId = employee.Id,
                 PositionId = position.Id
@@ -56,7 +56,7 @@ namespace StaffApi.Models
         public async Task RemovePositionAsync(Employee employee, Position position)
         {
             var ep = employee.EmployeePositions.FirstOrDefault(ep => ep.PositionId == position.Id);
-            if(ep == null)
+            if (ep == null)
                 throw new DbUpdateConcurrencyException();
             employee.EmployeePositions.Remove(ep);
             await _context.SaveChangesAsync();

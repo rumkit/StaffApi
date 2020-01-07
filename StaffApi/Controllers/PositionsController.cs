@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using StaffApi.Data;
-using StaffApi.Models;
 using StaffApi.DTO;
+using StaffApi.Models;
 
 namespace StaffApi.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/[controller]")]        
+    [Route("api/[controller]")]
     public class PositionsController : ControllerBase
     {
         private readonly IPositionRepository _positionRepository;
@@ -88,10 +85,8 @@ namespace StaffApi.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return NoContent();
@@ -119,7 +114,7 @@ namespace StaffApi.Controllers
         {
             await _positionRepository.CreateAsync(position);
 
-            return CreatedAtAction("GetPosition", new { id = position.Id }, position);
+            return CreatedAtAction("GetPosition", new {id = position.Id}, position);
         }
 
         /// <summary>

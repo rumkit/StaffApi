@@ -1,8 +1,4 @@
 ﻿using StaffApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace StaffApi.DTO
 {
@@ -14,7 +10,6 @@ namespace StaffApi.DTO
 
         public PositionDTO()
         {
-
         }
 
         public PositionDTO(Position position)

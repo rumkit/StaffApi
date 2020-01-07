@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using StaffApi.Data;
-using StaffApi.Models;
 using StaffApi.DTO;
+using StaffApi.Models;
 
 namespace StaffApi.Controllers
 {
@@ -23,7 +21,6 @@ namespace StaffApi.Controllers
         {
             _employeeRepository = employeeRepository;
             _positionRepository = positionRepository;
-
         }
 
         /// <summary>
@@ -90,10 +87,8 @@ namespace StaffApi.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             return NoContent();
@@ -119,7 +114,7 @@ namespace StaffApi.Controllers
         {
             await _employeeRepository.CreateAsync(employee);
 
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeDTO(employee));
+            return CreatedAtAction("GetEmployee", new {id = employee.Id}, new EmployeeDTO(employee));
         }
 
         /// <summary>
@@ -164,7 +159,7 @@ namespace StaffApi.Controllers
                 return BadRequest("Specified employee does not have such position");
             }
 
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeDTO(employee));
+            return CreatedAtAction("GetEmployee", new {id = employee.Id}, new EmployeeDTO(employee));
         }
 
         /// <summary>
@@ -191,7 +186,7 @@ namespace StaffApi.Controllers
                 return BadRequest();
             }
 
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, new EmployeeDTO(employee));
+            return CreatedAtAction("GetEmployee", new {id = employee.Id}, new EmployeeDTO(employee));
         }
 
         private bool EmployeeExists(int id)

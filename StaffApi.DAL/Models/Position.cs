@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace StaffApi.Models
 {
@@ -11,8 +8,8 @@ namespace StaffApi.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        [Range(1,15)]
+        [Range(1, 15)]
         public int Grade { get; set; }
-        public virtual ICollection<EmployeePosition> EmployeePositions { get; set; }        
+        public virtual ICollection<EmployeePosition> EmployeePositions { get; set; }
     }
 }

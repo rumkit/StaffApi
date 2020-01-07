@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using StaffApi.Data;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using StaffApi.Data;
 
 namespace StaffApi.Models
 {
     public class PositionRepository : IPositionRepository
     {
         private readonly StaffApiContext _context;
+
         public async Task<Position> FindAsync(int id)
         {
             return await _context.Positions.FirstOrDefaultAsync(p => p.Id == id);
@@ -43,7 +43,7 @@ namespace StaffApi.Models
             return _context.Positions.Any(p => p.Id == id);
         }
 
-        
+
         public PositionRepository(StaffApiContext context)
         {
             _context = context;

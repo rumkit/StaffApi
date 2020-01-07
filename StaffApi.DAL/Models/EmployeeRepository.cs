@@ -62,6 +62,13 @@ namespace StaffApi.Models
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateIsActiveAsync(int id, bool isActive)
+        {
+            var employee = await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
+            employee.IsActive = isActive;
+            await _context.SaveChangesAsync();
+        }
+
         public EmployeeRepository(StaffApiContext context)
         {
             _context = context;

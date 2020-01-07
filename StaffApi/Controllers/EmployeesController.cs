@@ -163,6 +163,47 @@ namespace StaffApi.Controllers
         }
 
         /// <summary>
+        /// Updates specified employee active status
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /Employees
+        ///     {
+        ///        "id": "0",
+        ///        "isActive": "true",
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <param name="employee"></param>
+        /// <returns></returns>
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> UpdateIsActive(int id, Employee employee)
+        {
+            if (id != employee.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _employeeRepository.UpdateIsActiveAsync(id,employee.IsActive);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EmployeeExists(id))
+                {
+                    return NotFound();
+                }
+
+                throw;
+            }
+
+            return NoContent();
+        }
+
+        /// <summary>
         /// Removes position from specified employee
         /// </summary>
         /// <param name="employeeId"></param>

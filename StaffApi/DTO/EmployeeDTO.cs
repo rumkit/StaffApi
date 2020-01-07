@@ -10,6 +10,7 @@ namespace StaffApi.DTO
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public bool IsActive { get; set; }
         public ICollection<PositionDTO> Positions { get; set; }
 
         public EmployeeDTO()
@@ -21,6 +22,7 @@ namespace StaffApi.DTO
             Id = employee.Id;
             Name = employee.Name;
             DateOfBirth = employee.DateOfBirth;
+            IsActive = employee.IsActive;
             if (employee.EmployeePositions?.Count > 0)
             {
                 Positions = employee.EmployeePositions.Select(ep => new PositionDTO(ep.Position)).ToList();

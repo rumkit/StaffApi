@@ -13,5 +13,6 @@ namespace StaffApi.Models
         bool EmployeeExists(int id);
         Task AddPositionAsync(Employee employee, Position position);
         Task RemovePositionAsync(Employee employee, Position position);
+        Task UpdateIsActiveAsync(int id, bool isActive);
     }
 }

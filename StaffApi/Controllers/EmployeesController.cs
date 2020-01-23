@@ -121,7 +121,7 @@ namespace StaffApi.Controllers
         /// Deletes specified employee
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Deleted item</returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Employee>> Delete(int id)
         {
@@ -133,6 +133,22 @@ namespace StaffApi.Controllers
 
             await _employeeRepository.RemoveAsync(employee);
             return employee;
+        }
+
+        /// <summary>
+        /// Deletes specified employees
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("deleteMultiple")]
+        public async  Task<ActionResult> DeleteMultiple([FromQuery]int[] ids)
+        {
+            foreach (var id in ids)
+            {
+                await Delete(id);
+            }
+            return Ok();
         }
 
         /// <summary>
